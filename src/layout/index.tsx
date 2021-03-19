@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react'
 import React from 'react'
-import Header from './components/header'
+import Resume from './components/Resume'
+import S from './index.less'
 
 interface IProps {
 
@@ -8,7 +9,15 @@ interface IProps {
 
 const Layout = (props: IProps) => {
   return (
-    <Header />
+    <div className={S.container}>
+      <div className={S.body}>
+        <div className={S.leftResume}>
+          <Resume />
+        </div>
+        <div className={S.content}></div>
+        <div className={S.rightNavigator}></div>
+      </div>
+    </div>
   )
 }
 
