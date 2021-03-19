@@ -3,7 +3,7 @@ import Resume from './components/Resume'
 import S from './index.less'
 
 interface IProps {
-
+  children: React.ReactNode;
 }
 
 const Layout = (props: IProps) => {
@@ -13,8 +13,9 @@ const Layout = (props: IProps) => {
         <div className={S.leftResume}>
           <Resume />
         </div>
-        <div className={S.content}></div>
-        <div className={S.rightNavigator}></div>
+        <div className={S.content}>
+          {props.children}
+        </div>
       </div>
     </div>
   )

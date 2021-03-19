@@ -11,7 +11,7 @@ const Menu: React.FC<IProps> = ({ data = [] }) => {
     <ul className={S.ul}>
       {
         data.map(item => (
-          <li>
+          <li key={item.label}>
             <a href={item.route}>{item.label}</a>
           </li>
         ))
