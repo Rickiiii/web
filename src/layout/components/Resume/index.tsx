@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { OTHER_WEB_NAVIGATOR } from './constants'
+import { MENU } from './constants'
+import Menu from '../Menu'
 import S from './index.less'
 
 interface IProps {
@@ -28,8 +29,8 @@ export default class Resume extends Component<IProps, IState> {
               </div>
             </div>
           </div>
-          <div>
-            
+          <div className={S.menu}>
+            <Menu data={MENU} />
           </div>
         </div>
       </div>

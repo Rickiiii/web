@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react'
 import React from 'react'
 import Resume from './components/Resume'
 import S from './index.less'
