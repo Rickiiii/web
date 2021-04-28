@@ -1,26 +1,38 @@
+html {
+  body {
+    background-color: #f1f2f9;
+  }
+}
+
 .container {
   margin-top: 50px;
   margin-bottom: 50px;
   position: relative;
-  max-width: 1200px;
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 
   .body {
-    width: 1200px;
-  }
-
-  .leftResume {
-    width: calc(100% * 1 / 6.001);
-  }
-
-  .content {
-    width: calc(100% * 5 / 6.001);
-    margin-left: calc(100% * 1 / 6.001 + 20px);
-    background: #fff;
-    color: #666;
-    border-radius: 10px;
-    box-shadow: 0 2px 15px rgb(0 0 0);
-    padding: 30px 25px;
+    width: 1400px;
+    display: inline-flex;
+    .leftResume {
+      width: 187px;
+      position: relative;
+    }
+  
+    .content {
+      width: calc(100% * 4 / 6.001);
+      margin-left: 20px;
+      background: #fff;
+      color: #666;
+      border-radius: 10px;
+      padding: 30px 25px;
+    }
+  
+    .rightTools {
+      width: calc(100% * 1 / 6.001);
+      position: relative;
+      margin-left: 20px;
+    }
   }
 }

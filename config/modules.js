@@ -1,4 +1,4 @@
-'use strict';
+
 
 const fs = require('fs');
 const path = require('path');
@@ -56,7 +56,7 @@ function getAdditionalModulePaths(options = {}) {
  */
 function getWebpackAliases(options = {}) {
   const baseUrl = options.baseUrl;
-
+  console.log(path.resolve(__dirname, "../src"), 'path.resolve(__dirname, "src")')
   if (!baseUrl) {
     return {};
   }
