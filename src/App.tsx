@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom'
-import LickDog from './pages/lickDog'
+import { menuList } from './constants'
 import Layout from './layout'
 import './App.css';
 
@@ -9,7 +9,11 @@ function App() {
   return (
     <Layout>
       <BrowserRouter>
-        <Route path="/lickDog" component={LickDog}></Route>
+      {
+        menuList.map(item => (
+          <Route key={item.link} path={`/${item.link}`} component={item.component} />
+        ))
+      }
       </BrowserRouter>
     </Layout>
   );

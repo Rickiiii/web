@@ -1,38 +1,83 @@
 html {
   body {
     background-color: #f1f2f9;
+    font-family: 'Ch';
   }
 }
 
-.container {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  position: relative;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
+.wrapper {
+  background: black;
+  overflow: hidden;
+  .container {
+    position: relative;
+    height: 500px;
+    z-index: 10;
+    background: white;
+    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+    &.showMenu {
+      transform: scale(0.8) translateX(-32vw) translateZ(0);
+      cursor: pointer;
+    }
 
-  .body {
-    width: 1400px;
-    display: inline-flex;
-    .leftResume {
-      width: 187px;
-      position: relative;
-    }
-  
     .content {
-      width: calc(100% * 4 / 6.001);
-      margin-left: 20px;
-      background: #fff;
-      color: #666;
-      border-radius: 10px;
-      padding: 30px 25px;
+      padding: 102px 90px 0;
     }
-  
-    .rightTools {
-      width: calc(100% * 1 / 6.001);
-      position: relative;
-      margin-left: 20px;
+  }
+  .menu {
+    position: fixed;
+    display: flex;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    padding-top: 57.5px;
+    padding-bottom: 57.5px;
+    min-width: 33.3vw;
+    padding-right: 4%;
+
+    ul {
+      font-family: 'En';
+      li {
+        margin-bottom: 12px;
+        position: relative;
+        list-style: none;
+        .label {
+          color: #ffffff;
+          font-size: 47px;
+          transition: transform 0.37s cubic-bezier(0.52, 0.01, 0.16, 1);
+          position: relative;
+          &::after{
+            content: '';
+            transform-origin: left;
+            pointer-events: none;
+            -webkit-transition: -webkit-transform .3s ease-out, border-color .3s ease-out;
+            transition: transform .3s ease-out,border-color .3s ease-out;
+            position: absolute;
+            display: block;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            -ms-transform: scaleX(0);
+            -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+            border-top: 2px solid #fff;
+            padding-bottom: inherit;
+          }
+          &.isChosen {
+            &::after{
+              -ms-transform: scaleX(1);
+              -webkit-transform: scaleX(1);
+              transform: scaleX(1);
+            }
+          }
+          &:hover {
+            &::after {
+              -ms-transform: scaleX(1);
+              -webkit-transform: scaleX(1);
+              transform: scaleX(1);
+            }
+          }
+        }
+      }
     }
   }
 }
