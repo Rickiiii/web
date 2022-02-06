@@ -1,6 +1,15 @@
 html {
+  --view-minmax: calc((100vw - 500px) / (1920 - 500));
+  --size-h1: calc(42px + (88 - 42) * var(--view-minmax));
+  --size-h2: calc(22px + (34 - 22) * var(--view-minmax));
+  font-family: 'Ch';
+
   body {
     background-color: #f1f2f9;
+    font-family: 'Ch';
+  }
+
+  h1 {
     font-family: 'Ch';
   }
 }
@@ -8,21 +17,25 @@ html {
 .wrapper {
   background: black;
   overflow: hidden;
+
   .container {
     position: relative;
-    height: 500px;
+    min-height: 500px;
     z-index: 10;
     background: white;
     transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+
     &.showMenu {
       transform: scale(0.8) translateX(-32vw) translateZ(0);
       cursor: pointer;
     }
 
     .content {
-      padding: 102px 90px 0;
+      padding-top: 102px;
+      max-width: 1680px;
     }
   }
+
   .menu {
     position: fixed;
     display: flex;
@@ -36,21 +49,24 @@ html {
 
     ul {
       font-family: 'En';
+
       li {
         margin-bottom: 12px;
         position: relative;
         list-style: none;
+
         .label {
           color: #ffffff;
           font-size: 47px;
           transition: transform 0.37s cubic-bezier(0.52, 0.01, 0.16, 1);
           position: relative;
-          &::after{
+
+          &::after {
             content: '';
             transform-origin: left;
             pointer-events: none;
             -webkit-transition: -webkit-transform .3s ease-out, border-color .3s ease-out;
-            transition: transform .3s ease-out,border-color .3s ease-out;
+            transition: transform .3s ease-out, border-color .3s ease-out;
             position: absolute;
             display: block;
             bottom: 0px;
@@ -62,13 +78,15 @@ html {
             border-top: 2px solid #fff;
             padding-bottom: inherit;
           }
+
           &.isChosen {
-            &::after{
+            &::after {
               -ms-transform: scaleX(1);
               -webkit-transform: scaleX(1);
               transform: scaleX(1);
             }
           }
+
           &:hover {
             &::after {
               -ms-transform: scaleX(1);

@@ -1,0 +1,62 @@
+.homeContain {
+
+  .intro {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(20%, 330px) 75px minmax(max-content, 1fr) 75px minmax(20%, 300px);
+      grid-template-rows: 176px 55px minmax(max-content, 1fr) 35px 175px;
+      grid-template-areas:
+        "ls . . . ."
+        "ls . . . rs"
+        "ls . h1 . rs"
+        "ls . h2 . rs"
+        ". . h2 . rs";
+      transform: translateY(-88px);
+
+      h1 {
+        font-size: var(--size-h1);
+        line-height: calc(var(--size-h1) * 1.382);
+        grid-area: h1;
+      }
+
+      h2 {
+        font-size: var(--size-h2);
+        line-height: calc(var(--size-h2) + 10px);
+        grid-area: h2;
+      }
+
+      .slice {
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 20px 90px 0 rgba(0, 0, 0, 8%), 0 9px 30px 0 rgba(0, 0, 0, 10%);
+        background-image: url(../../images/4.jpg);
+        background-size: cover;
+
+        &.left {
+          grid-area: ls;
+          background-position: left;
+        }
+
+        &.right {
+          grid-area: rs;
+          background-position: right;
+        }
+      }
+    }
+
+  }
+
+  .comments {
+    margin: 0 auto;
+    max-width: 72em;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+  }
+
+}
