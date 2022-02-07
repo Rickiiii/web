@@ -1,23 +1,27 @@
 import axios from 'axios'
 
 function getData(api: string, params?: Object) {
+  return new Promise((resolve, reject) => {
     axios.get(api, params)
-    .then(function (response) {
-        return response
+    .then(response => {
+      resolve(response.data as any)
     })
-    .catch(function (error) {
-        console.log(error);
+    .catch(error => {
+      reject(error)
     });
+  })
 }
 
 function postData(api: string, params?: Object) {
+  return new Promise((resolve, reject) => {
     axios.post(api, params)
-      .then(function (response) {
-        return response
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    .then(response => {
+      resolve(response.data)
+    })
+    .catch(error => {
+      reject(error)
+    });
+  })
 }
 
 export {

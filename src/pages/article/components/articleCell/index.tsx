@@ -7,7 +7,7 @@ interface IProps {
   value: IArticle,
 }
 
-const Cell: React.FC<IProps> = ({ value: { title, content, type } }) => {
+const Cell: React.FC<IProps> = ({ value: { title, content, type, time, commentsNum } }) => {
   return (
     <div className={S.articleCellContainer}>
       <div className={S.leftImg}>
@@ -19,6 +19,14 @@ const Cell: React.FC<IProps> = ({ value: { title, content, type } }) => {
       <div className={S.rightContent}>
         <div className={S.title}>{title}</div>
         <div className={S.content}>{content}</div>
+        <div className={S.bottom}>
+          <span className={S.time}>
+            {time}
+          </span>
+          <span className={S.commentsNum}>
+            {commentsNum}条评论
+          </span>
+        </div>
       </div>
     </div>
   )

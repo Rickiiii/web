@@ -4,6 +4,6 @@ export interface IArticle {
   time: string;
   title: string;
   content: string;
-  commentNum: number;
+  commentsNum: number;
   img: string;
 }

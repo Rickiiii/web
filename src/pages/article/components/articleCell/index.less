@@ -24,9 +24,9 @@
     position: relative;
 
     .category {
-      position: absolute!important;
-      left: 12px!important;
-      top: 12px!important;
+      position: absolute !important;
+      left: 12px !important;
+      top: 12px !important;
       padding: 6px 13px;
       background: rgba(255, 255, 255, 0.8);
       border-radius: 12px;
@@ -52,20 +52,40 @@
   .rightContent {
     display: inline-block;
     overflow: hidden;
-    padding: 0 40px;
+    padding: 10px 40px;
     width: 70%;
     height: 100%;
 
     .title {
-      transition: .3s;
-      line-height: 76px;
-      height: 76px;
+      transition: 0.3s;
+      line-height: 50px;
+      height: 50px;
       font-weight: 500;
-      font-size: 46px;
+      font-size: 28px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .content {
       font-size: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-height: 37px;
+    }
+
+    .bottom {
+      position: absolute;
+      bottom: 7px;
+      font-size: 16px;
+      right: 16px;
+
+      .commentsNum {
+        margin-left: 20px;
+      }
     }
   }
 }

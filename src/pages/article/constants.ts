@@ -26,5 +26,3 @@ export const articleCategoryList = [{
 }]
 
 export const articleCategoryObj = arrayToObj(articleCategoryList)
-
-console.log(articleCategoryObj, 'articleCategoryObj')
