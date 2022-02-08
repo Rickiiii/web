@@ -11,11 +11,11 @@ interface IProps {
 const Layout = (props: IProps) => {
 
   const [showMenu, setShowMenu] = useState(false)
-  const [paddingValue, setPaddingValue] = useState(0)
+  // const [paddingValue, setPaddingValue] = useState(0)
 
   const handleMenuClick = () => {
-    const value = document.body.clientHeight * 0.1
-    setPaddingValue(value)
+    // const value = document.body.clientHeight * 0.1
+    // setPaddingValue(value)
     setShowMenu(!showMenu)
   }
 
@@ -44,7 +44,7 @@ const Layout = (props: IProps) => {
       </div>
       <div
         className={S.menu}
-        style={showMenu ? { paddingTop: paddingValue, paddingBottom: paddingValue } : {}}
+        // style={showMenu ? { paddingTop: paddingValue, paddingBottom: paddingValue } : {}}
       >
         <ul>
           {

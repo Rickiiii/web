@@ -1,23 +1,22 @@
 import React from 'react'
 import { articleCategoryList } from '../../constants'
-// @ts-ignore
-import imgs from '@/images/category'
 import S from './index.less'
 
 const NavigateBar: React.FC = () => {
 
-  console.log(imgs, 'imgs')
+  console.log(require(`@/images/category/1.png`), 'imgs')
 
   return (
     <div className={S.navigateContainer}>
       <ul>
-        {articleCategoryList.map(item => (
-          // <img src='../../../../images/category/1.png' />
+        {[{ label: '全部文章', value: 0 }].concat(articleCategoryList).map(item => (
           <li
             key={item.value}
-            style={{ backgroundImage: `url($)` }}
+            style={{ backgroundImage: `url(${require(`@/images/category/${item.value || 0}.png`).default})` }}
           >
-            {item.label}
+            <div className={S.text}>
+              {item.label}
+            </div>
           </li>
         ))}
       </ul>
