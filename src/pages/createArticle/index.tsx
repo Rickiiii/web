@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Input } from 'antd'
+import { Input, Select } from 'antd'
 import BraftEditor from 'braft-editor'
 import { ExtendControlType } from 'braft-editor'
+import { articleCategoryList } from '../article/constants'
 import S from './index.less'
 import 'braft-editor/dist/index.css'
 
@@ -9,6 +10,7 @@ const CreateArticle: React.FC = () => {
 
   const [editorValue, setEditorValue] = useState()
   const [title, setTitle] = useState('')
+  const [type, setType] = useState(1)
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -49,13 +51,27 @@ const CreateArticle: React.FC = () => {
 
   return (
     <div className={S.editorContainer}>
-      <div className={S.title}>
+      <div className={S.label}>
         <span className={S.text}>标题：</span>
         <Input
           style={{ width: 'calc(100% - 45px)' }}
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
+      </div>
+      <div className={S.label}>
+      <span className={S.text}>类型：</span>
+        <Select
+          style={{ width: 300 }}
+          value={type}
+          onChange={value => setType(value)}
+        >
+          {
+            articleCategoryList.map(item => (
+              <Select.Option key={item.value} value={item.value}>{item.label}</Select.Option>
+            ))
+          }
+        </Select>
       </div>
       <BraftEditor
         value={editorValue}

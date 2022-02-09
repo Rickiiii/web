@@ -58,7 +58,7 @@ const Article: React.FC<IProps> = () => {
 
   useEffect(() => {
     getData('http://127.0.0.1:7001/article/list').then((res: any) => {
-      setData(res.data)
+      setData(res.data || defaultData)
     })
   }, [])
 
