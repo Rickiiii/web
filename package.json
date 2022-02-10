@@ -25,6 +25,7 @@
     "braft-editor": "^2.3.9",
     "classnames": "^2.3.1",
     "lax.js": "^2.0.3",
+    "lodash": "^4.17.21",
     "rc-queue-anim": "^2.0.0",
     "rc-scroll-anim": "^2.7.6",
     "react": "17.x",
