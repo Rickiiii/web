@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ArticleCell from './components/articleCell'
 import NavigateBar from './components/navigateBar';
+import { Link } from 'react-router-dom'
 import QueueAnim from 'rc-queue-anim';
 import { Pagination } from 'antd'
 import { OverPack } from 'rc-scroll-anim';
@@ -76,9 +77,13 @@ const Article: React.FC<IProps> = () => {
                 key="ul"
                 leaveReverse
               >
-                <div key={`${item.title}${item.time}`}>
+                <Link
+                  key={`${item.title}${item.time}`}
+                  to={`/articleDetail?id=${item.id}`}
+                  style={{ color: 'rgba(0, 0, 0, 0.85)' }}
+                >
                   <ArticleCell value={item} />
-                </div>
+                </Link>
               </QueueAnim>
             </OverPack>
           ))

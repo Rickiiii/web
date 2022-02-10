@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import CommentsSection from './components/commentsSection'
 import { getData } from '@/utils'
 import S from './index.less'
 
@@ -23,6 +24,7 @@ const Detail: React.FC<IProps> = ({ match }) => {
   return (
     <div className={S.articleDetailContainer}>
       <div className={S.content} dangerouslySetInnerHTML={{ __html: htmlContent }} />
+      <CommentsSection comments={[{ content: 1 }]}/>
     </div>
   )
 }
