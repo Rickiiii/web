@@ -1,54 +1,75 @@
-import React, { useState } from 'react';
-import { Input, Select } from 'antd';
-import BraftEditor from 'braft-editor';
-import { ExtendControlType } from 'braft-editor';
+import React, { useState, useEffect } from 'react';
+import { Input, Select, message, Button } from 'antd';
+import { history } from 'umi';
 import { articleCategoryList } from '../article/constants';
 import LabelCell from './components/labelCell';
 import SelectTag from './components/selectTag';
+import { postData, getData } from '@/utils';
+import { ILocation } from '@/interface';
+import MDEditor from '@uiw/react-md-editor';
+
 import S from './index.less';
 import 'braft-editor/dist/index.css';
 
-const CreateArticle: React.FC = () => {
+interface IProps extends ILocation {}
+
+const CreateArticle: React.FC<IProps> = ({ location }) => {
   const [editorValue, setEditorValue] = useState();
   const [title, setTitle] = useState('');
   const [type, setType] = useState(1);
+  const [tags, setTags] = useState<string[]>([]);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // Assume here to get the editor content in html format from the server
-  //     const htmlContent = await fetchEditorContent()
-  //     // Use BraftEditor.createEditorState to convert html strings to editorState data needed by the editor
-  //     this.setState({
-  //       editorState: BraftEditor.createEditorState(htmlContent)
-  //     })
-  //   }
-
-  // }, [])
+  useEffect(() => {
+    const {
+      query: { id },
+    } = location;
+    if (id) {
+      getData('http://127.0.0.1:7001/article/getOne', {
+        id,
+      }).then((res: any) => {
+        if (res?.code === 0) {
+          const {
+            title: newTitle,
+            content,
+            tags: newTags,
+            type: newType,
+          } = res?.data || {};
+          setEditorValue(content);
+          setTitle(newTitle);
+          setType(newType);
+          setTags(JSON.parse(newTags));
+        }
+      });
+    }
+  }, []);
 
   const handleEditorChange = (value: any) => {
+    console.log(value);
     setEditorValue(value);
   };
 
   const submitContent = async () => {
-    // Pressing ctrl + s when the editor has focus will execute this method
-    // Before the editor content is submitted to the server, you can directly call editorState.toHTML () to get the HTML content
-    const htmlContent = (editorValue as any).toHTML();
-    console.log(htmlContent);
-    // const result = await saveEditorContent(htmlContent)
+    const {
+      query: { id },
+    } = location;
+    const params = {
+      id: id || undefined,
+      title,
+      type,
+      tags: JSON.stringify(tags),
+      content: editorValue,
+    };
+    postData(
+      `http://localhost:7001/article/${id ? 'update' : 'create'}`,
+      params,
+    ).then((res: any) => {
+      if (res?.code === 0) {
+        message.success(id ? '编辑成功' : '创建成功');
+        history.push('/article');
+      }
+    });
+    console.log(params, 'params');
   };
-
-  const extendControls: ExtendControlType[] = [
-    'separator',
-    {
-      key: 'my-button', // 控件唯一标识，必传
-      type: 'button',
-      title: '提交', // 指定鼠标悬停提示文案
-      className: 'my-button', // 指定按钮的样式名
-      html: null, // 指定在按钮中渲染的html字符串
-      text: 'Submit', // 指定按钮文字，此处可传入jsx，若已指定html，则text不会显示
-      onClick: submitContent,
-    },
-  ];
 
   return (
     <div className={S.editorContainer}>
@@ -73,14 +94,20 @@ const CreateArticle: React.FC = () => {
         </Select>
       </LabelCell>
       <LabelCell label="标签">
-        <SelectTag />
+        <SelectTag tags={tags} setTags={setTags} />
       </LabelCell>
-      <BraftEditor
-        value={editorValue}
-        onChange={handleEditorChange}
-        style={{ boxShadow: '0 8px 11px -3px rgba(10, 10, 10, 30%)' }}
-        extendControls={extendControls}
-      />
+      <div className={S.editContainer}>
+        <div className={S.submit}>
+          <Button type="primary" onClick={submitContent}>
+            Submit
+          </Button>
+        </div>
+        <MDEditor
+          height={600}
+          value={editorValue}
+          onChange={handleEditorChange}
+        />
+      </div>
     </div>
   );
 };

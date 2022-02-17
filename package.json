@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
+    "@uiw/react-md-editor": "^3.9.4",
     "axios": "^0.25.0",
-    "braft-editor": "^2.3.9",
     "classnames": "^2.3.1",
     "lax.js": "^2.0.3",
     "lodash": "^4.17.21",

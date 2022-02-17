@@ -3,97 +3,95 @@ import { history } from 'umi';
 import ArticleCell from './components/articleCell';
 import NavigateBar from './components/navigateBar';
 import QueueAnim from 'rc-queue-anim';
-import { Pagination } from 'antd';
+import { Pagination, Spin } from 'antd';
 import { OverPack } from 'rc-scroll-anim';
 import { getData } from '@/utils';
 import { IArticle } from './interface';
+import { ILocation } from '@/interface';
 import S from './index.less';
 
-interface IProps {}
+interface IProps extends ILocation {}
 
-const defaultData = [
-  {
-    id: 1,
-    type: 1,
-    title: 'Gravatar 头像不显示了',
-    content:
-      '好久没写文章，收到留言然后进入博客看看，发现头像显示不出来，不知道是不是gravatar被墙了，修改下。在 config.inc.php 添加：defin...',
-    time: '2022-01-21',
-    commentsNum: 10,
-    img: require('../../images/alien.jpg'),
-  },
-  {
-    id: 2,
-    type: 2,
-    title: 'Gravatar 头像不显示了',
-    content:
-      '好久没写文章，收到留言然后进入博客看看，发现头像显示不出来，不知道是不是gravatar被墙了，修改下。在 config.inc.php 添加：defin...',
-    time: '2022-01-22',
-    commentsNum: 10,
-    img: require('../../images/alien.jpg'),
-  },
-  {
-    id: 3,
-    type: 3,
-    title: 'Gravatar 头像不显示了',
-    content:
-      '好久没写文章，收到留言然后进入博客看看，发现头像显示不出来，不知道是不是gravatar被墙了，修改下。在 config.inc.php 添加：defin...',
-    time: '2022-01-23',
-    commentsNum: 10,
-    img: require('../../images/alien.jpg'),
-  },
-  {
-    id: 4,
-    type: 4,
-    title: 'Gravatar 头像不显示了',
-    content:
-      '好久没写文章，收到留言然后进入博客看看，发现头像显示不出来，不知道是不是gravatar被墙了，修改下。在 config.inc.php 添加：defin...',
-    time: '2022-01-24',
-    commentsNum: 10,
-    img: require('../../images/alien.jpg'),
-  },
-  {
-    id: 5,
-    type: 5,
-    title: 'Gravatar 头像不显示了',
-    content:
-      '好久没写文章，收到留言然后进入博客看看，发现头像显示不出来，不知道是不是gravatar被墙了，修改下。在 config.inc.php 添加：defin...',
-    time: '2022-01-25',
-    commentsNum: 10,
-    img: require('../../images/alien.jpg'),
-  },
-];
-
-const Article: React.FC<IProps> = () => {
-  const [data, setData] = useState<IArticle[]>(defaultData);
+const Article: React.FC<IProps> = ({ location }) => {
+  const [data, setData] = useState<IArticle[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [pageConf, setPageConf] = useState({ page: 1, pageSize: 5, total: 0 });
 
   useEffect(() => {
-    getData('http://127.0.0.1:7001/article/list').then((res: any) => {
-      setData(res.data || defaultData);
-    });
+    getList();
   }, []);
+
+  const getList = (
+    page = pageConf.page,
+    pageSize = pageConf.pageSize,
+    type: undefined | number = undefined,
+  ) => {
+    let newType = parseInt(location.query.type);
+    if (typeof type === 'number') {
+      newType = type;
+    }
+    setLoading(true);
+    getData('http://localhost:7001/article/list', {
+      page,
+      pageSize,
+      type: newType,
+    })
+      .then((res: any) => {
+        if (res?.code === 0) {
+          const { list, page, pageSize, total } = res?.data || {};
+          setData(list);
+          setPageConf({ page, pageSize, total });
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleChangePage = (page: number, pageSize: number) => {
+    console.log(page, pageSize);
+    setPageConf({ ...pageConf, page, pageSize });
+    getList(page, pageSize);
+  };
+
+  const handleItemClick = (type: number) => {
+    history.push(`/article?type=${type}`);
+    getList(1, pageConf.pageSize, type);
+  };
 
   return (
     <div className={S.articleContainer}>
       <header>
-        <NavigateBar />
+        <NavigateBar
+          handleItemClick={handleItemClick}
+          type={parseInt(location.query.type)}
+        />
       </header>
-      <div className={S.content} style={{ height: data.length * 248 }}>
-        {data.map((item) => (
-          <OverPack playScale={0.1} key={`${item.title}${item.time}`}>
-            <QueueAnim type="bottom" key="ul" leaveReverse>
-              <div
-                key={`${item.title}${item.time}`}
-                onClick={() => history.push(`/article/detail?id=${item.id}`)}
-              >
-                <ArticleCell value={item} />
-              </div>
-            </QueueAnim>
-          </OverPack>
-        ))}
-      </div>
+      <Spin spinning={loading}>
+        <div className={S.content} style={{ height: data.length * 248 }}>
+          {data.map((item) => (
+            <OverPack playScale={0.1} key={`${item.title}${item.time}`}>
+              <QueueAnim type="bottom" key="ul" leaveReverse>
+                <div
+                  key={`${item.title}${item.time}`}
+                  onClick={() => history.push(`/article/detail?id=${item.id}`)}
+                >
+                  <ArticleCell value={item} />
+                </div>
+              </QueueAnim>
+            </OverPack>
+          ))}
+        </div>
+      </Spin>
       <div className={S.paginationWrapper}>
-        <Pagination total={data.length} pageSize={5} defaultCurrent={1} />
+        <Pagination
+          total={pageConf.total}
+          pageSize={pageConf.pageSize}
+          current={pageConf.page}
+          onChange={handleChangePage}
+          pageSizeOptions={[5, 10, 20]}
+          showSizeChanger
+        />
       </div>
     </div>
   );

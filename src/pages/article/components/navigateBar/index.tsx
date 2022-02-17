@@ -1,8 +1,14 @@
 import React from 'react';
+import cx from 'classnames';
 import { articleCategoryList } from '../../constants';
 import S from './index.less';
 
-const NavigateBar: React.FC = () => {
+interface IProps {
+  handleItemClick: (type: number) => void;
+  type: number;
+}
+
+const NavigateBar: React.FC<IProps> = ({ handleItemClick, type }) => {
   return (
     <div className={S.navigateContainer}>
       <ul>
@@ -16,8 +22,11 @@ const NavigateBar: React.FC = () => {
                   item.value || 0
                 }.png`)})`,
               }}
+              onClick={() => handleItemClick(item.value)}
             >
-              <div className={S.text}>{item.label}</div>
+              <div className={cx(S.text, { [S.chosen]: type === item.value })}>
+                {item.label}
+              </div>
             </li>
           ))}
       </ul>

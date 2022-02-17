@@ -5,10 +5,15 @@ import { deepCloneByJson } from '@/utils/util';
 import debounce from 'lodash/debounce';
 import S from './index.less';
 
-interface ISelectTagProps {}
+interface ISelectTagProps {
+  tags: string[];
+  setTags: (tags: string[]) => void;
+}
 
-const SelectTag: React.FunctionComponent<ISelectTagProps> = (props) => {
-  const [tags, setTags] = useState<string[]>([]);
+const SelectTag: React.FunctionComponent<ISelectTagProps> = ({
+  tags,
+  setTags,
+}) => {
   const [options, setOptions] = useState<ILabelValue[]>([]);
 
   const onSearch = (value: string) => {
