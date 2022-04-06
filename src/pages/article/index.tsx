@@ -31,7 +31,7 @@ const Article: React.FC<IProps> = ({ location }) => {
       newType = type;
     }
     setLoading(true);
-    getData('http://localhost:7001/article/list', {
+    getData('article/list', {
       page,
       pageSize,
       type: newType,

@@ -14,7 +14,7 @@ const Detail: React.FC<IProps> = (props) => {
   const [title, setTitle] = useState('');
 
   useEffect(() => {
-    getData('http://127.0.0.1:7001/article/getOne', {
+    getData('article/getOne', {
       id: props.location.query.id,
     }).then((res: any) => {
       if (res?.code === 0) {

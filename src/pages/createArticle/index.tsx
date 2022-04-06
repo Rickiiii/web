@@ -9,7 +9,6 @@ import { ILocation } from '@/interface';
 import MDEditor from '@uiw/react-md-editor';
 
 import S from './index.less';
-import 'braft-editor/dist/index.css';
 
 interface IProps extends ILocation {}
 
@@ -24,7 +23,7 @@ const CreateArticle: React.FC<IProps> = ({ location }) => {
       query: { id },
     } = location;
     if (id) {
-      getData('http://127.0.0.1:7001/article/getOne', {
+      getData('article/getOne', {
         id,
       }).then((res: any) => {
         if (res?.code === 0) {
@@ -59,10 +58,7 @@ const CreateArticle: React.FC<IProps> = ({ location }) => {
       tags: JSON.stringify(tags),
       content: editorValue,
     };
-    postData(
-      `http://localhost:7001/article/${id ? 'update' : 'create'}`,
-      params,
-    ).then((res: any) => {
+    postData(`article/${id ? 'update' : 'create'}`, params).then((res: any) => {
       if (res?.code === 0) {
         message.success(id ? '编辑成功' : '创建成功');
         history.push('/article');

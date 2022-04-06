@@ -1,10 +1,13 @@
 import axios from 'axios';
 // import Qs from 'qs'
 
+const DEFAULT_DOMAIN = 'http://localhost:7001';
+// const DEFAULT_DOMAIN = 'http://www.rickiWang.top:7001'
+
 function getData(api: string, params?: Object) {
   return new Promise((resolve, reject) => {
     axios
-      .get(api, { params })
+      .get(`${DEFAULT_DOMAIN}/${api}`, { params })
       .then((response) => {
         resolve(response.data as any);
       })
@@ -17,7 +20,7 @@ function getData(api: string, params?: Object) {
 function postData(api: string, params?: Object) {
   return new Promise((resolve, reject) => {
     axios
-      .post(api, params)
+      .post(`${DEFAULT_DOMAIN}/${api}`, params)
       .then((response) => {
         resolve(response.data as any);
       })

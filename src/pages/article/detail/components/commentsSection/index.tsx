@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Comment, Avatar, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
-import S from './index.less'
+import S from './index.less';
 
 const { TextArea } = Input;
 
 interface IComments {
-  content: React.ReactNode | string,
-  [propsName: string]: any,
+  content: React.ReactNode | string;
+  [propsName: string]: any;
 }
 
 interface ICommentListProps {
@@ -19,7 +19,7 @@ const CommentList = ({ comments }: ICommentListProps) => (
     dataSource={comments}
     header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
     itemLayout="horizontal"
-    renderItem={props => <Comment {...props} />}
+    renderItem={(props) => <Comment {...props} />}
   />
 );
 
@@ -36,30 +36,33 @@ const Editor = ({ onChange, onSubmit, submitting, value }: IEditorProps) => (
       <TextArea rows={4} onChange={onChange} value={value} />
     </Form.Item>
     <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-        Add Comment
+      <Button
+        htmlType="submit"
+        loading={submitting}
+        onClick={onSubmit}
+        type="primary"
+      >
+        评论
       </Button>
     </Form.Item>
   </div>
 );
 
-
 interface ICommentsSectionProps {
   comments: IComments[];
 }
 
-const CommentsSection: React.FunctionComponent<ICommentsSectionProps> = ({ comments }) => {
-
-  const [value, setValue] = useState(undefined)
-  const [submitting, setSubmitting] = useState(false)
+const CommentsSection: React.FunctionComponent<ICommentsSectionProps> = ({
+  comments,
+}) => {
+  const [value, setValue] = useState(undefined);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e: any) => {
-    setValue(e.target.value)
+    setValue(e.target.value);
   };
 
-  const handleSubmit = (e: any) => {
-
-  }
+  const handleSubmit = (e: any) => {};
 
   return (
     <div className={S.commentsSectionContainer}>
@@ -87,4 +90,4 @@ const CommentsSection: React.FunctionComponent<ICommentsSectionProps> = ({ comme
   );
 };
 
-export default CommentsSection
+export default CommentsSection;
