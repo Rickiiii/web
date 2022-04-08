@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar, Form, Button, List, Input, message } from 'antd';
+import { postData } from '@/utils/request';
 import moment from 'moment';
 import S from './index.less';
 
@@ -50,10 +51,14 @@ const Editor = ({ onChange, onSubmit, submitting, value }: IEditorProps) => (
 
 interface ICommentsSectionProps {
   comments: IComments[];
+  id: string;
+  refresh: () => void;
 }
 
 const CommentsSection: React.FunctionComponent<ICommentsSectionProps> = ({
   comments,
+  id,
+  refresh,
 }) => {
   const [value, setValue] = useState(undefined);
   const [submitting, setSubmitting] = useState(false);
@@ -62,7 +67,18 @@ const CommentsSection: React.FunctionComponent<ICommentsSectionProps> = ({
     setValue(e.target.value);
   };
 
-  const handleSubmit = (e: any) => {};
+  const handleSubmit = () => {
+    postData('article/addComment', {
+      id,
+      comment: value,
+    }).then((res) => {
+      if (res?.code === 0) {
+        message.success('评论成功');
+        setValue(undefined);
+        refresh();
+      }
+    });
+  };
 
   return (
     <div className={S.commentsSectionContainer}>

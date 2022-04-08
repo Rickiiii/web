@@ -36,7 +36,7 @@ const CreateArticle: React.FC<IProps> = ({ location }) => {
           setEditorValue(content);
           setTitle(newTitle);
           setType(newType);
-          setTags(JSON.parse(newTags));
+          setTags(newTags);
         }
       });
     }

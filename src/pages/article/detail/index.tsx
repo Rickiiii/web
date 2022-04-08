@@ -12,21 +12,29 @@ interface IProps {
 const Detail: React.FC<IProps> = (props) => {
   const [htmlContent, setHtmlContent] = useState('');
   const [title, setTitle] = useState('');
+  const [comments, setComments] = useState<{ content: string }[]>([]);
+
+  const { id } = props.location.query;
 
   useEffect(() => {
-    getData('article/getOne', {
-      id: props.location.query.id,
-    }).then((res: any) => {
-      if (res?.code === 0) {
-        const { title: newTitle, content } = res?.data || {};
-        setHtmlContent(content);
-        setTitle(newTitle);
-      }
-    });
+    getArticle();
   }, []);
 
+  const getArticle = () => {
+    getData('article/getOne', {
+      id,
+    }).then((res) => {
+      if (res?.code === 0) {
+        const { title: newTitle, content, comment } = res?.data || {};
+        setHtmlContent(content);
+        setTitle(newTitle);
+        setComments(comment.map((i: string) => ({ content: i })));
+      }
+    });
+  };
+
   const editArticle = () => {
-    history.push(`/createArticle?id=${props.location.query.id}`);
+    history.push(`/createArticle?id=${id}`);
   };
 
   return (
@@ -42,7 +50,7 @@ const Detail: React.FC<IProps> = (props) => {
             dangerouslySetInnerHTML={{ __html: htmlContent }}
           /> */}
         </div>
-        <CommentsSection comments={[{ content: 1 }]} />
+        <CommentsSection id={id} comments={comments} refresh={getArticle} />
       </div>
     </div>
   );
